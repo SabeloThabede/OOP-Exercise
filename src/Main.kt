@@ -1,18 +1,27 @@
-fun main(){
-    var tiger = Animal(80)
-    tiger.run()
+fun main() {
+    // Upcasting: Reference of Father pointing to Son object
+    val fatherRef: Father = Son("Smith")
+    fatherRef.printName()  // Calls overridden method in Son
 
-    tiger.topSpeed = 100
-    tiger.run()
-
-
+    // Downcasting: Casting Father reference back to Son
+    if (fatherRef is Son) {
+        val sonRef: Son = fatherRef as Son
+        sonRef.printName()  // Calls method from Son
+    }
 }
 
-class Animal(var topSpeed: Int){
+open class Father(val lastName: String) {
+    open val firstName: String = "John"
 
-    fun run(){
-        println("The animal's Top Speed is $topSpeed km/h ")
+    open fun printName() {
+        println("Name: $firstName $lastName")
     }
+}
 
+class Son(lastName: String) : Father(lastName) {
+    override val firstName: String = "Michael"
 
+    override fun printName() {
+        println("Name: $firstName $lastName, Father's Name: ${super.firstName} $lastName")
+    }
 }
